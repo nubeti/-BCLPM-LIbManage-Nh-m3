@@ -1,0 +1,1777 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quản lý Thư viện - Bản thiết kế Wireframe SQA</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        :root {
+            --primary: #2563EB;
+            --primary-hover: #1D4ED8;
+            --primary-light: #EFF6FF;
+            --header-bg: #0F172A;
+            --header-border: #1E293B;
+            --bg-canvas: #F8FAFC;
+            --card-bg: #FFFFFF;
+            --border-color: #E2E8F0;
+            --text-dark: #0F172A;
+            --text-body: #334155;
+            --text-muted: #64748B;
+            --accent-green: #059669;
+            --accent-green-bg: #ECFDF5;
+            --accent-red: #DC2626;
+            --accent-red-bg: #FEF2F2;
+            --accent-amber: #D97706;
+            --accent-amber-bg: #FFFBEB;
+            --accent-sky: #0284C7;
+            --accent-sky-bg: #F0F9FF;
+            --radius-sm: 6px;
+            --radius-md: 10px;
+            --radius-lg: 14px;
+            --shadow-sm: 0 1px 2px rgba(0,0,0,0.05);
+            --shadow-md: 0 4px 6px -1px rgba(0,0,0,0.07), 0 2px 4px -2px rgba(0,0,0,0.04);
+            --shadow-lg: 0 10px 15px -3px rgba(0,0,0,0.1), 0 4px 6px -4px rgba(0,0,0,0.05);
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background-color: var(--bg-canvas);
+            color: var(--text-body);
+            line-height: 1.5;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* --- 1. TOP NAVBAR SANG TRỌNG --- */
+        .app-header {
+            background: linear-gradient(135deg, #0F172A 0%, #1E293B 100%);
+            border-bottom: 1px solid var(--header-border);
+            padding: 14px 32px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 32px;
+        }
+
+        .brand-title {
+            font-size: 20px;
+            font-weight: 800;
+            color: #FFFFFF;
+            letter-spacing: -0.3px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .brand-title::before {
+            content: "📚";
+            font-size: 22px;
+        }
+
+        .nav-tabs-group {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .nav-tab-btn {
+            background: rgba(255, 255, 255, 0.08);
+            color: #94A3B8;
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            padding: 8px 18px;
+            font-size: 13.5px;
+            font-weight: 600;
+            cursor: pointer;
+            border-radius: var(--radius-sm);
+            transition: all 0.2s ease;
+        }
+
+        .nav-tab-btn:hover {
+            background: rgba(255, 255, 255, 0.16);
+            color: #FFFFFF;
+        }
+
+        .nav-tab-btn.active {
+            background: linear-gradient(135deg, #2563EB, #1D4ED8);
+            color: #FFFFFF;
+            border-color: #3B82F6;
+            box-shadow: 0 2px 8px rgba(37, 99, 235, 0.4);
+        }
+
+        .badge-role {
+            background: rgba(56, 189, 248, 0.12);
+            color: #38BDF8;
+            border: 1px solid rgba(56, 189, 248, 0.35);
+            padding: 6px 18px;
+            font-size: 13px;
+            font-weight: 600;
+            border-radius: 9999px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .badge-role::before {
+            content: "";
+            width: 8px;
+            height: 8px;
+            background: #38BDF8;
+            border-radius: 50%;
+            box-shadow: 0 0 8px #38BDF8;
+        }
+
+        /* --- 2. MAIN CONTAINER --- */
+        .main-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 28px 32px 70px;
+        }
+
+        .content-card-wrapper {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-lg);
+            padding: 28px;
+            box-shadow: var(--shadow-md);
+        }
+
+        /* --- 3. PAGE HEADER & BADGE --- */
+        .page-header-row {
+            margin-bottom: 22px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .page-title {
+            font-size: 23px;
+            font-weight: 800;
+            color: var(--text-dark);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            letter-spacing: -0.3px;
+        }
+
+        .screen-badge {
+            font-size: 12px;
+            font-weight: 700;
+            background: var(--primary-light);
+            color: var(--primary);
+            border: 1px solid #BFDBFE;
+            padding: 3px 9px;
+            border-radius: var(--radius-sm);
+        }
+
+        /* --- 4. ACTION BAR (Search & Filters & Primary CTA) --- */
+        .action-bar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 16px;
+            margin-bottom: 22px;
+            flex-wrap: wrap;
+        }
+
+        .filter-group {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex: 1;
+            max-width: 820px;
+        }
+
+        .search-input {
+            flex: 1;
+            height: 42px;
+            border: 1.5px solid #CBD5E1;
+            padding: 0 16px;
+            font-size: 14px;
+            border-radius: var(--radius-sm);
+            outline: none;
+            background: #FFFFFF;
+            color: var(--text-dark);
+            transition: all 0.2s ease;
+        }
+
+        .search-input:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
+        }
+
+        .segmented-filters {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            background: #F1F5F9;
+            padding: 3px;
+            border-radius: 8px;
+            border: 1px solid #E2E8F0;
+        }
+
+        .filter-btn {
+            height: 36px;
+            padding: 0 16px;
+            border: none;
+            background: transparent;
+            color: #64748B;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            border-radius: 6px;
+            transition: all 0.18s ease;
+            white-space: nowrap;
+        }
+
+        .filter-btn:hover {
+            color: var(--text-dark);
+        }
+
+        .filter-btn.active {
+            background: #FFFFFF;
+            color: var(--primary);
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+            font-weight: 700;
+        }
+
+        .select-filter {
+            height: 42px;
+            padding: 0 14px;
+            border: 1.5px solid #CBD5E1;
+            background: #FFFFFF;
+            color: var(--text-dark);
+            font-size: 13.5px;
+            font-weight: 600;
+            border-radius: var(--radius-sm);
+            outline: none;
+            cursor: pointer;
+            transition: border 0.2s;
+        }
+
+        .select-filter:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
+        }
+
+        .btn-primary {
+            height: 42px;
+            background: linear-gradient(135deg, #2563EB 0%, #1D4ED8 100%);
+            color: #FFFFFF;
+            border: none;
+            padding: 0 22px;
+            font-size: 14px;
+            font-weight: 700;
+            cursor: pointer;
+            border-radius: var(--radius-sm);
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            box-shadow: 0 3px 8px rgba(37, 99, 235, 0.3);
+            transition: all 0.2s ease;
+            white-space: nowrap;
+        }
+
+        .btn-primary:hover {
+            background: linear-gradient(135deg, #1D4ED8 0%, #1E40AF 100%);
+            box-shadow: 0 6px 14px rgba(37, 99, 235, 0.4);
+            transform: translateY(-1px);
+        }
+
+        .btn-outline {
+            height: 38px;
+            background: #FFFFFF;
+            color: var(--text-dark);
+            border: 1.5px solid #CBD5E1;
+            padding: 0 16px;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            border-radius: var(--radius-sm);
+            transition: all 0.18s ease;
+        }
+
+        .btn-outline:hover {
+            background: #F8FAFC;
+            border-color: #94A3B8;
+        }
+
+        .btn-sm {
+            height: 32px;
+            padding: 0 12px;
+            font-size: 12.5px;
+            font-weight: 600;
+            border-radius: var(--radius-sm);
+        }
+
+        /* --- 5. BẢNG DỮ LIỆU HIỆN ĐẠI & RỰC RỠ --- */
+        .table-responsive {
+            width: 100%;
+            overflow-x: auto;
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-md);
+            box-shadow: var(--shadow-sm);
+            background: #FFFFFF;
+        }
+
+        .wireframe-table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: left;
+            font-size: 13.5px;
+        }
+
+        .wireframe-table th {
+            background: #F8FAFC;
+            color: #475569;
+            font-weight: 700;
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            padding: 14px 16px;
+            border-bottom: 2px solid var(--border-color);
+            white-space: nowrap;
+        }
+
+        .wireframe-table td {
+            padding: 13px 16px;
+            border-bottom: 1px solid #F1F5F9;
+            vertical-align: middle;
+            color: var(--text-body);
+        }
+
+        .wireframe-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .wireframe-table tr:hover td {
+            background-color: #F8FAFC;
+        }
+
+        .wireframe-table tr:nth-child(even) td {
+            background-color: #FCFDFE;
+        }
+
+        .wireframe-table tr:hover:nth-child(even) td {
+            background-color: #F8FAFC;
+        }
+
+        .actions-cell {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            white-space: nowrap;
+        }
+
+        /* Nút hành động trong bảng */
+        .btn-action-return {
+            background: #ECFDF5;
+            color: #047857;
+            border: 1px solid #A7F3D0;
+            padding: 6px 12px;
+            border-radius: 6px;
+            font-weight: 600;
+            font-size: 12.5px;
+            cursor: pointer;
+            transition: all 0.15s;
+        }
+
+        .btn-action-return:hover {
+            background: #059669;
+            color: #FFFFFF;
+            border-color: #059669;
+            box-shadow: 0 2px 6px rgba(5, 150, 105, 0.3);
+        }
+
+        .btn-action-renew {
+            background: #EFF6FF;
+            color: #1D4ED8;
+            border: 1px solid #BFDBFE;
+            padding: 6px 12px;
+            border-radius: 6px;
+            font-weight: 600;
+            font-size: 12.5px;
+            cursor: pointer;
+            transition: all 0.15s;
+        }
+
+        .btn-action-renew:hover {
+            background: #2563EB;
+            color: #FFFFFF;
+            border-color: #2563EB;
+            box-shadow: 0 2px 6px rgba(37, 99, 235, 0.3);
+        }
+
+        /* Huy hiệu trạng thái */
+        .badge-status {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            font-weight: 600;
+            font-size: 12.5px;
+            padding: 4px 12px;
+            border-radius: 9999px;
+        }
+
+        .status-danger {
+            background: var(--accent-red-bg);
+            color: var(--accent-red);
+            border: 1px solid #FECACA;
+            font-weight: 700;
+        }
+
+        .status-danger::before {
+            content: "●";
+            font-size: 10px;
+            color: var(--accent-red);
+        }
+
+        .status-success {
+            background: var(--accent-green-bg);
+            color: var(--accent-green);
+            border: 1px solid #A7F3D0;
+        }
+
+        .status-success::before {
+            content: "●";
+            font-size: 10px;
+            color: var(--accent-green);
+        }
+
+        .status-warning {
+            background: var(--accent-amber-bg);
+            color: var(--accent-amber);
+            border: 1px solid #FDE68A;
+        }
+
+        .status-warning::before {
+            content: "●";
+            font-size: 10px;
+            color: var(--accent-amber);
+        }
+
+        /* --- 6. KHỐI KPI THỐNG KÊ (4 THẺ RỰC RỠ) --- */
+        .kpi-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .kpi-card {
+            padding: 22px 24px;
+            background: #FFFFFF;
+            border-radius: var(--radius-md);
+            border: 1px solid var(--border-color);
+            box-shadow: var(--shadow-sm);
+            position: relative;
+            overflow: hidden;
+            transition: all 0.2s ease;
+        }
+
+        .kpi-card:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .kpi-card::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+        }
+
+        /* Card 1: Tổng sách (Xanh dương) */
+        .kpi-card:nth-child(1)::before { background: linear-gradient(90deg, #3B82F6, #1D4ED8); }
+        .kpi-card:nth-child(1) .kpi-value { color: #1D4ED8; }
+
+        /* Card 2: Độc giả (Xanh lá ngọc) */
+        .kpi-card:nth-child(2)::before { background: linear-gradient(90deg, #10B981, #059669); }
+        .kpi-card:nth-child(2) .kpi-value { color: #059669; }
+
+        /* Card 3: Đang mượn (Cam hổ phách) */
+        .kpi-card:nth-child(3)::before { background: linear-gradient(90deg, #F59E0B, #D97706); }
+        .kpi-card:nth-child(3) .kpi-value { color: #D97706; }
+
+        /* Card 4: Quá hạn (Đỏ san hô cảnh báo) */
+        .kpi-card:nth-child(4)::before { background: linear-gradient(90deg, #EF4444, #DC2626); }
+        .kpi-card:nth-child(4) .kpi-value { color: #DC2626; }
+        .kpi-card.kpi-card-black {
+            background: linear-gradient(135deg, #FEF2F2 0%, #FFFFFF 100%);
+            border: 1.5px solid #FECACA;
+        }
+
+        .kpi-card .kpi-label {
+            font-size: 13.5px;
+            font-weight: 600;
+            color: var(--text-muted);
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .kpi-card.kpi-card-black .kpi-label {
+            color: #991B1B;
+        }
+
+        .kpi-card .kpi-value {
+            font-size: 40px;
+            font-weight: 800;
+            line-height: 1;
+            letter-spacing: -1px;
+        }
+
+        .kpi-sub-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 16px;
+            margin-top: 14px;
+        }
+
+        .sub-title-group {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .sub-title {
+            font-size: 18px;
+            font-weight: 800;
+            color: var(--text-dark);
+        }
+
+        .action-buttons-group {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        /* --- 7. MODALS THAO TÁC NỔI SANG TRỌNG --- */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: rgba(15, 23, 42, 0.65);
+            backdrop-filter: blur(4px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+        }
+
+        .modal-box {
+            background: #FFFFFF;
+            border-radius: var(--radius-lg);
+            width: 560px;
+            max-width: 92vw;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.2), 0 10px 10px -5px rgba(0, 0, 0, 0.1);
+            animation: modalFadeIn 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+            overflow: hidden;
+        }
+
+        @keyframes modalFadeIn {
+            from { transform: scale(0.95) translateY(8px); opacity: 0; }
+            to { transform: scale(1) translateY(0); opacity: 1; }
+        }
+
+        .modal-header {
+            padding: 18px 24px;
+            background: #F8FAFC;
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .modal-title {
+            font-size: 18px;
+            font-weight: 800;
+            color: var(--text-dark);
+        }
+
+        .modal-badge-close {
+            font-size: 13px;
+            font-weight: 700;
+            cursor: pointer;
+            padding: 5px 10px;
+            border: 1px solid #CBD5E1;
+            border-radius: 6px;
+            background: #FFFFFF;
+            color: #64748B;
+            transition: all 0.15s;
+        }
+
+        .modal-badge-close:hover {
+            background: var(--accent-red);
+            color: #FFFFFF;
+            border-color: var(--accent-red);
+        }
+
+        .modal-body {
+            padding: 24px;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            max-height: 75vh;
+            overflow-y: auto;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .form-label {
+            font-size: 13px;
+            font-weight: 700;
+            color: var(--text-dark);
+        }
+
+        .form-control {
+            height: 42px;
+            border: 1.5px solid #CBD5E1;
+            padding: 0 14px;
+            font-size: 14px;
+            border-radius: var(--radius-sm);
+            outline: none;
+            background: #FFFFFF;
+            color: var(--text-dark);
+            font-family: inherit;
+            transition: all 0.2s ease;
+        }
+
+        .form-control:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
+        }
+
+        .form-row-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+        }
+
+        /* Khung Cảnh báo đứt nét (Trang 2 Wireframe) */
+        .wireframe-alert-box {
+            border: 1.8px dashed #CBD5E1;
+            padding: 14px 16px;
+            font-size: 13px;
+            line-height: 1.5;
+            background: #F8FAFC;
+            border-radius: var(--radius-sm);
+            margin-top: 4px;
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            color: var(--text-body);
+        }
+
+        .wireframe-alert-box.alert-danger {
+            border-color: #F87171;
+            background: #FEF2F2;
+            color: #991B1B;
+            font-weight: 600;
+            box-shadow: 0 2px 4px rgba(220, 38, 38, 0.08);
+        }
+
+        .modal-footer {
+            padding: 16px 24px;
+            background: #F8FAFC;
+            border-top: 1px solid var(--border-color);
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            gap: 12px;
+        }
+
+        .btn-disabled {
+            opacity: 0.5 !important;
+            cursor: not-allowed !important;
+            background: #94A3B8 !important;
+            box-shadow: none !important;
+            transform: none !important;
+        }
+
+        /* Toast thông báo */
+        .toast-msg {
+            position: fixed;
+            bottom: 28px;
+            right: 28px;
+            background: #0F172A;
+            color: #FFFFFF;
+            padding: 14px 24px;
+            font-size: 14px;
+            font-weight: 600;
+            border-radius: 8px;
+            border-left: 4px solid #10B981;
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.3);
+            display: none;
+            z-index: 2000;
+            animation: toastIn 0.2s ease-out;
+        }
+
+        @keyframes toastIn {
+            from { transform: translateY(10px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- TOP NAVBAR -->
+    <header class="app-header">
+        <div class="header-left">
+            <span class="brand-title">Quản lý Thư viện</span>
+            <nav class="nav-tabs-group">
+                <button class="nav-tab-btn active" id="tab-nav-borrows" onclick="switchTab('borrows')">Sổ mượn trả</button>
+                <button class="nav-tab-btn" id="tab-nav-readers" onclick="switchTab('readers')">Độc giả</button>
+                <button class="nav-tab-btn" id="tab-nav-books" onclick="switchTab('books')">Kho sách</button>
+                <button class="nav-tab-btn" id="tab-nav-kpi" onclick="switchTab('kpi')">Thống kê KPI</button>
+            </nav>
+        </div>
+        <div class="header-right">
+            <span class="badge-role">Thủ thư: Cao Phương Thảo</span>
+        </div>
+    </header>
+
+    <main class="main-container">
+
+        <!-- ============================================================= -->
+        <!-- TAB 1: SỔ THEO DÕI MƯỢN / TRẢ (S02)                          -->
+        <!-- ============================================================= -->
+        <section id="section-borrows">
+            <div class="page-header-row">
+                <h1 class="page-title">Sổ theo dõi mượn / trả <span class="screen-badge">S02</span></h1>
+            </div>
+
+            <div class="action-bar">
+                <div class="filter-group">
+                    <input type="text" id="borrow-search" class="search-input" placeholder="Tìm mã phiếu / độc giả / sách" oninput="renderBorrowsTable()">
+                    <div class="segmented-filters">
+                        <button class="filter-btn active" id="f-borrow-all" onclick="setBorrowFilter('all', this)">Tất cả</button>
+                        <button class="filter-btn" id="f-borrow-active" onclick="setBorrowFilter('active', this)">Đang mượn</button>
+                        <button class="filter-btn" id="f-borrow-overdue" onclick="setBorrowFilter('overdue', this)">Quá hạn</button>
+                    </div>
+                </div>
+                <button class="btn-primary" onclick="openBorrowModal()">+ Lập phiếu mượn</button>
+            </div>
+
+            <div class="table-responsive">
+                <table class="wireframe-table">
+                    <thead>
+                        <tr>
+                            <th>Mã phiếu</th>
+                            <th>Độc giả</th>
+                            <th>Sách</th>
+                            <th>Ngày mượn</th>
+                            <th>Hạn trả (+14 ngày)</th>
+                            <th>Trạng thái</th>
+                            <th>Phạt (2.000đ/ngày)</th>
+                            <th>Thao tác</th>
+                        </tr>
+                    </thead>
+                    <tbody id="borrow-table-body">
+                        <!-- Render JS -->
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- ============================================================= -->
+        <!-- TAB 2: DANH BẠ ĐỘC GIẢ & THẺ (S04)                           -->
+        <!-- ============================================================= -->
+        <section id="section-readers" style="display: none;">
+            <div class="page-header-row">
+                <h1 class="page-title">Danh bạ độc giả & thẻ <span class="screen-badge">S04</span></h1>
+            </div>
+
+            <div class="action-bar">
+                <div class="filter-group">
+                    <input type="text" id="reader-search" class="search-input" placeholder="Tìm tên / mã sinh viên / khoa" oninput="renderReadersTable()">
+                    <div class="segmented-filters">
+                        <button class="filter-btn active" id="f-reader-all" onclick="setReaderFilter('all', this)">Tất cả</button>
+                        <button class="filter-btn" id="f-reader-active" onclick="setReaderFilter('active', this)">Hoạt động</button>
+                        <button class="filter-btn" id="f-reader-locked" onclick="setReaderFilter('locked', this)">Khóa</button>
+                    </div>
+                </div>
+                <button class="btn-primary" onclick="openAddReaderModal()">+ Thêm độc giả</button>
+            </div>
+
+            <div class="table-responsive">
+                <table class="wireframe-table">
+                    <thead>
+                        <tr>
+                            <th>Mã sinh viên</th>
+                            <th>Họ và tên</th>
+                            <th>Khoa / Lớp</th>
+                            <th>Email</th>
+                            <th>Số điện thoại</th>
+                            <th>Trạng thái</th>
+                            <th>Thao tác</th>
+                        </tr>
+                    </thead>
+                    <tbody id="reader-table-body">
+                        <!-- Render JS -->
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- ============================================================= -->
+        <!-- TAB 3: DANH MỤC KHO SÁCH (S06)                               -->
+        <!-- ============================================================= -->
+        <section id="section-books" style="display: none;">
+            <div class="page-header-row">
+                <h1 class="page-title">Danh mục kho sách <span class="screen-badge">S06</span></h1>
+            </div>
+
+            <div class="action-bar">
+                <div class="filter-group">
+                    <input type="text" id="book-search" class="search-input" placeholder="Tìm tên sách / tác giả / mã sách" oninput="renderBooksTable()">
+                    <div class="segmented-filters">
+                        <button class="filter-btn active" id="f-book-all" onclick="setBookFilter('all', this)">Tất cả</button>
+                        <select id="book-category-filter" class="select-filter" onchange="renderBooksTable()">
+                            <option value="">[Thể loại]</option>
+                            <option value="Giáo trình">Giáo trình</option>
+                            <option value="Công nghệ Java">Công nghệ Java</option>
+                            <option value="Kỹ năng lập trình">Kỹ năng lập trình</option>
+                            <option value="Kiểm thử SQA">Kiểm thử SQA</option>
+                        </select>
+                        <button class="filter-btn" id="f-book-out" onclick="setBookFilter('out', this)">Hết sách</button>
+                    </div>
+                </div>
+                <button class="btn-primary" onclick="openAddBookModal()">+ Thêm sách</button>
+            </div>
+
+            <div class="table-responsive">
+                <table class="wireframe-table">
+                    <thead>
+                        <tr>
+                            <th>Mã sách</th>
+                            <th>Tên đầu sách</th>
+                            <th>Tác giả</th>
+                            <th>Thể loại</th>
+                            <th>Tổng</th>
+                            <th>Khả dụng</th>
+                            <th>Vị trí kệ</th>
+                            <th>Thao tác</th>
+                        </tr>
+                    </thead>
+                    <tbody id="book-table-body">
+                        <!-- Render JS -->
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- ============================================================= -->
+        <!-- TAB 4: THỐNG KÊ KPI (S08 · S09)                              -->
+        <!-- ============================================================= -->
+        <section id="section-kpi" style="display: none;">
+            <div class="page-header-row">
+                <h1 class="page-title">Thống kê KPI <span class="screen-badge">S08 · S09</span></h1>
+            </div>
+
+            <div class="kpi-grid">
+                <div class="kpi-card">
+                    <div class="kpi-label">Tổng đầu sách</div>
+                    <div class="kpi-value" id="kpi-total-books">0</div>
+                </div>
+                <div class="kpi-card">
+                    <div class="kpi-label">Độc giả hoạt động</div>
+                    <div class="kpi-value" id="kpi-active-readers">0</div>
+                </div>
+                <div class="kpi-card">
+                    <div class="kpi-label">Đang mượn</div>
+                    <div class="kpi-value" id="kpi-active-borrows">0</div>
+                </div>
+                <div class="kpi-card kpi-card-black">
+                    <div class="kpi-label">Quá hạn</div>
+                    <div class="kpi-value" id="kpi-overdue">0</div>
+                </div>
+            </div>
+
+            <div class="kpi-sub-row">
+                <div class="sub-title-group">
+                    <h3 class="sub-title">Danh sách quá hạn</h3>
+                    <button class="btn-outline btn-sm" onclick="filterOverdueInKpi()">Lọc</button>
+                </div>
+                <div class="action-buttons-group">
+                    <button class="btn-outline" onclick="exportCsv()">Xuất báo cáo CSV</button>
+                    <button class="btn-outline" onclick="backupJson()">Sao lưu</button>
+                </div>
+            </div>
+
+            <div class="table-responsive">
+                <table class="wireframe-table">
+                    <thead>
+                        <tr>
+                            <th>Độc giả</th>
+                            <th>Sách</th>
+                            <th>Hạn trả</th>
+                            <th>Số ngày trễ</th>
+                            <th>Phạt</th>
+                        </tr>
+                    </thead>
+                    <tbody id="overdue-table-body">
+                        <!-- Render JS -->
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- ================================================================= -->
+    <!-- MODAL 1: LẬP PHIẾU MƯỢN (S03 - Trang 2 Wireframe)                -->
+    <!-- ================================================================= -->
+    <div id="modal-borrow" class="modal-overlay" style="display: none;">
+        <div class="modal-box">
+            <div class="modal-header">
+                <h3 class="modal-title">Lập phiếu mượn</h3>
+                <span class="modal-badge-close" onclick="closeModal('modal-borrow')">✕ · S03</span>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label class="form-label">Độc giả (mã sinh viên)</label>
+                    <select id="borrow-reader-select" class="form-control" onchange="checkQuotaOnSelect()">
+                        <option value="">[Tìm mã / tên độc giả]</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Sách (mã / tên)</label>
+                    <select id="borrow-book-select" class="form-control">
+                        <option value="">[Tìm đầu sách]</option>
+                    </select>
+                </div>
+
+                <div class="form-row-2">
+                    <div class="form-group">
+                        <label class="form-label">Ngày mượn</label>
+                        <input type="date" id="borrow-date-input" class="form-control" onchange="autoCalcDueDate()">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Hạn trả (tự động +14 ngày)</label>
+                        <input type="date" id="borrow-due-input" class="form-control" readonly style="background:#F8FAFC;">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Ghi chú</label>
+                    <input type="text" id="borrow-note-input" class="form-control" placeholder="[Nhập ghi chú]">
+                </div>
+
+                <!-- Khung Cảnh báo đứt nét chuẩn Wireframe -->
+                <div id="borrow-warning-box" class="wireframe-alert-box">
+                    <span>⚠</span>
+                    <span id="borrow-warning-text">Cảnh báo: độc giả đang mượn 0/3 cuốn. Đạt hạn mức thì không thể lập phiếu.</span>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn-outline" onclick="closeModal('modal-borrow')">Hủy</button>
+                <button id="btn-save-borrow" class="btn-primary" onclick="submitBorrow()">Lưu</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ================================================================= -->
+    <!-- MODAL 2: THÊM / SỬA ĐỘC GIẢ (S05 - Trang 4 Wireframe)            -->
+    <!-- ================================================================= -->
+    <div id="modal-reader" class="modal-overlay" style="display: none;">
+        <div class="modal-box">
+            <div class="modal-header">
+                <h3 class="modal-title" id="reader-modal-heading">Thêm / Sửa độc giả</h3>
+                <span class="modal-badge-close" onclick="closeModal('modal-reader')">✕ · S05</span>
+            </div>
+            <div class="modal-body">
+                <input type="hidden" id="reader-id-edit" value="">
+                <div class="form-group">
+                    <label class="form-label">Mã sinh viên</label>
+                    <input type="text" id="reader-code-input" class="form-control" placeholder="[Mã sinh viên]">
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Họ và tên</label>
+                    <input type="text" id="reader-name-input" class="form-control" placeholder="[Họ và tên]">
+                </div>
+
+                <div class="form-row-2">
+                    <div class="form-group">
+                        <label class="form-label">Email</label>
+                        <input type="email" id="reader-email-input" class="form-control" placeholder="[Email liên hệ]">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Số điện thoại</label>
+                        <input type="text" id="reader-phone-input" class="form-control" placeholder="[SĐT]">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Khoa / Lớp</label>
+                    <input type="text" id="reader-dept-input" class="form-control" placeholder="[Khoa / Lớp]">
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Trạng thái thẻ</label>
+                    <div class="segmented-filters">
+                        <button type="button" class="filter-btn active" id="btn-status-act" onclick="setReaderStatusChoice(1)">Hoạt động</button>
+                        <button type="button" class="filter-btn" id="btn-status-lock" onclick="setReaderStatusChoice(0)">Khóa</button>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn-outline" onclick="closeModal('modal-reader')">Hủy</button>
+                <button class="btn-primary" onclick="submitReader()">Lưu</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ================================================================= -->
+    <!-- MODAL 3: THÊM / SỬA SÁCH (S07 - Trang 5 Wireframe)               -->
+    <!-- ================================================================= -->
+    <div id="modal-book" class="modal-overlay" style="display: none;">
+        <div class="modal-box">
+            <div class="modal-header">
+                <h3 class="modal-title" id="book-modal-heading">Thêm / Sửa sách</h3>
+                <span class="modal-badge-close" onclick="closeModal('modal-book')">✕ · S07</span>
+            </div>
+            <div class="modal-body">
+                <input type="hidden" id="book-id-edit" value="">
+                <div class="form-group">
+                    <label class="form-label">Mã đầu sách</label>
+                    <input type="text" id="book-code-input" class="form-control" placeholder="[Mã đầu sách]">
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Tên đầu sách</label>
+                    <input type="text" id="book-title-input" class="form-control" placeholder="[Tên đầu sách]">
+                </div>
+
+                <div class="form-row-2">
+                    <div class="form-group">
+                        <label class="form-label">Tác giả</label>
+                        <input type="text" id="book-author-input" class="form-control" placeholder="[Tác giả]">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Thể loại</label>
+                        <input type="text" id="book-cat-input" class="form-control" placeholder="[Thể loại]">
+                    </div>
+                </div>
+
+                <div class="form-row-2">
+                    <div class="form-group">
+                        <label class="form-label">Tổng số lượng</label>
+                        <input type="number" id="book-total-input" class="form-control" placeholder="[n]" min="1">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Số lượng khả dụng</label>
+                        <input type="number" id="book-avail-input" class="form-control" placeholder="[n]" min="0">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Vị trí kệ</label>
+                    <input type="text" id="book-loc-input" class="form-control" placeholder="[Vị trí kệ]">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn-outline" onclick="closeModal('modal-book')">Hủy</button>
+                <button class="btn-primary" onclick="submitBook()">Lưu</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Notification -->
+    <div id="app-toast" class="toast-msg"></div>
+
+    <script>
+        // =============================================================
+        // ỨNG DỤNG QUẢN LÝ THƯ VIỆN MINI LIBMANAGE - LOGIC JAVASCRIPT
+        // =============================================================
+
+        // Dữ liệu ban đầu
+        let books = [
+            { id: 1, book_code: "BK001", title: "Nhập môn Đảm bảo chất lượng phần mềm", author: "Trần Thị Hồng Oanh", category: "Giáo trình", total_copies: 10, available_copies: 8, location: "Kệ A1 - Tầng 2" },
+            { id: 2, book_code: "BK002", title: "Lập trình Web với Java và Spring Boot", author: "Nguyễn Khắc Chính", category: "Công nghệ Java", total_copies: 8, available_copies: 7, location: "Kệ B2 - Tầng 2" },
+            { id: 3, book_code: "BK003", title: "Thiết kế cơ sở dữ liệu quan hệ với JDBC", author: "Nguyễn Văn Ba", category: "Giáo trình", total_copies: 8, available_copies: 8, location: "Kệ A2 - Tầng 2" },
+            { id: 4, book_code: "BK004", title: "Clean Code - Nghệ thuật viết mã sạch", author: "Robert C. Martin", category: "Kỹ năng lập trình", total_copies: 5, available_copies: 5, location: "Kệ C1 - Tầng 3" },
+            { id: 5, book_code: "BK005", title: "Kiểm thử phần mềm căn bản và nâng cao", author: "Dorothy Graham", category: "Kiểm thử SQA", total_copies: 7, available_copies: 7, location: "Kệ B1 - Tầng 2" }
+        ];
+
+        let readers = [
+            { id: 1, reader_code: "SV2201", full_name: "Trần Văn Hùng", email: "hung.tv@hou.edu.vn", phone: "0912345678", department: "CNTT K18", status: 1 },
+            { id: 2, reader_code: "SV2202", full_name: "Lê Thị Thu Thảo", email: "thao.lt@hou.edu.vn", phone: "0987654321", department: "KTPM K18", status: 1 },
+            { id: 3, reader_code: "SV2203", full_name: "Phạm Hoàng Nam", email: "nam.ph@hou.edu.vn", phone: "0933445566", department: "KHMT K19", status: 1 },
+            { id: 4, reader_code: "GV1001", full_name: "ThS. Nguyễn Khắc Chính", email: "chinh.nk@hou.edu.vn", phone: "0905123456", department: "Bộ môn CNPM", status: 1 }
+        ];
+
+        // Tạo ngày tháng mẫu
+        function formatDate(d) {
+            return d.toISOString().split('T')[0];
+        }
+
+        const now = new Date();
+        const dMinus20 = new Date(now.getTime() - 20 * 86400000);
+        const dMinus6 = new Date(now.getTime() - 6 * 86400000);
+        const dMinus5 = new Date(now.getTime() - 5 * 86400000);
+        const dPlus9 = new Date(now.getTime() + 9 * 86400000);
+
+        let borrows = [
+            { id: 1, reader_id: 1, book_id: 1, borrow_date: formatDate(dMinus20), due_date: formatDate(dMinus6), return_date: null, status: 3, fine_amount: 12000, note: "Quá hạn 6 ngày" },
+            { id: 2, reader_id: 2, book_id: 2, borrow_date: formatDate(dMinus5), due_date: formatDate(dPlus9), return_date: null, status: 1, fine_amount: 0, note: "Đang mượn" }
+        ];
+
+        // Biến trạng thái bộ lọc
+        let currentBorrowFilter = 'all';
+        let currentReaderFilter = 'all';
+        let currentBookFilter = 'all';
+        let currentReaderStatusChoice = 1;
+
+        // Tự động tính tiền phạt khi tải trang (2.000 VNĐ / ngày trễ)
+        function updateFines() {
+            const todayStr = formatDate(new Date());
+            borrows.forEach(b => {
+                if (!b.return_date) {
+                    if (b.due_date < todayStr) {
+                        const d1 = new Date(b.due_date);
+                        const d2 = new Date(todayStr);
+                        const diffDays = Math.max(1, Math.round((d2 - d1) / (1000 * 60 * 60 * 24)));
+                        b.status = 3; // Quá hạn
+                        b.fine_amount = diffDays * 2000;
+                    } else {
+                        b.status = 1;
+                        b.fine_amount = 0;
+                    }
+                }
+            });
+        }
+
+        // Chuyển Tab
+        function switchTab(tab) {
+            ['borrows', 'readers', 'books', 'kpi'].forEach(t => {
+                document.getElementById('section-' + t).style.display = (t === tab ? 'block' : 'none');
+                document.getElementById('tab-nav-' + t).classList.toggle('active', t === tab);
+            });
+            if (tab === 'borrows') renderBorrowsTable();
+            if (tab === 'readers') renderReadersTable();
+            if (tab === 'books') renderBooksTable();
+            if (tab === 'kpi') renderKpiSection();
+        }
+
+        // =============================================================
+        // RENDER TAB 1: SỔ MƯỢN TRẢ (S02)
+        // =============================================================
+        function setBorrowFilter(filter, btn) {
+            currentBorrowFilter = filter;
+            document.querySelectorAll('#section-borrows .segmented-filters .filter-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            renderBorrowsTable();
+        }
+
+        function renderBorrowsTable() {
+            updateFines();
+            const q = document.getElementById('borrow-search').value.toLowerCase().trim();
+            const tbody = document.getElementById('borrow-table-body');
+            tbody.innerHTML = '';
+
+            const filtered = borrows.filter(b => {
+                const r = readers.find(x => x.id === b.reader_id);
+                const bk = books.find(x => x.id === b.book_id);
+                const rName = r ? r.full_name.toLowerCase() : '';
+                const rCode = r ? r.reader_code.toLowerCase() : '';
+                const bTitle = bk ? bk.title.toLowerCase() : '';
+                const pCode = 'pm-' + String(b.id).padStart(3, '0');
+
+                const matchQ = pCode.includes(q) || rName.includes(q) || rCode.includes(q) || bTitle.includes(q);
+                if (!matchQ) return false;
+
+                if (currentBorrowFilter === 'active') return b.return_date === null && b.status !== 3;
+                if (currentBorrowFilter === 'overdue') return b.return_date === null && b.status === 3;
+                return true;
+            });
+
+            if (filtered.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="8" style="text-align:center;padding:24px;color:#64748B;">Không có giao dịch nào phù hợp</td></tr>';
+                return;
+            }
+
+            filtered.forEach(b => {
+                const r = readers.find(x => x.id === b.reader_id);
+                const bk = books.find(x => x.id === b.book_id);
+                const codeStr = 'PM-' + String(b.id).padStart(3, '0');
+
+                let sttHtml = '';
+                if (b.return_date) {
+                    sttHtml = '<span class="badge-status status-success">Đã trả</span>';
+                } else if (b.status === 3) {
+                    sttHtml = '<span class="badge-status status-danger">Quá hạn !</span>';
+                } else {
+                    sttHtml = '<span class="badge-status">Đang mượn</span>';
+                }
+
+                const fineStr = b.fine_amount > 0 ? b.fine_amount.toLocaleString('vi-VN') + 'đ' : '0đ';
+
+                let actionHtml = '';
+                if (!b.return_date) {
+                    actionHtml = `
+                        <div class="actions-cell">
+                            <button class="btn-outline btn-sm" onclick="returnBook(${b.id})">Trả sách & phạt</button>
+                            <button class="btn-outline btn-sm" onclick="renewBook(${b.id})">Gia hạn +7 ngày</button>
+                        </div>
+                    `;
+                } else {
+                    actionHtml = '<span style="color:#64748B;font-size:12px;">Hoàn tất</span>';
+                }
+
+                tbody.innerHTML += `
+                    <tr>
+                        <td><b>${codeStr}</b></td>
+                        <td>${r ? r.full_name : 'N/A'}<br><span style="font-size:11px;color:#64748B;">${r ? r.reader_code : ''}</span></td>
+                        <td>${bk ? bk.title : 'N/A'}</td>
+                        <td>${b.borrow_date}</td>
+                        <td>${b.due_date}</td>
+                        <td>${sttHtml}</td>
+                        <td style="${b.fine_amount > 0 ? 'font-weight:700;color:#DC2626;' : ''}">${fineStr}</td>
+                        <td>${actionHtml}</td>
+                    </tr>
+                `;
+            });
+        }
+
+        // =============================================================
+        // RENDER TAB 2: ĐỘC GIẢ (S04)
+        // =============================================================
+        function setReaderFilter(filter, btn) {
+            currentReaderFilter = filter;
+            document.querySelectorAll('#section-readers .segmented-filters .filter-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            renderReadersTable();
+        }
+
+        function renderReadersTable() {
+            const q = document.getElementById('reader-search').value.toLowerCase().trim();
+            const tbody = document.getElementById('reader-table-body');
+            tbody.innerHTML = '';
+
+            const filtered = readers.filter(r => {
+                const matchQ = r.full_name.toLowerCase().includes(q) || r.reader_code.toLowerCase().includes(q) || r.department.toLowerCase().includes(q);
+                if (!matchQ) return false;
+
+                if (currentReaderFilter === 'active') return r.status === 1;
+                if (currentReaderFilter === 'locked') return r.status === 0;
+                return true;
+            });
+
+            if (filtered.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="7" style="text-align:center;padding:24px;color:#64748B;">Không tìm thấy bạn đọc nào</td></tr>';
+                return;
+            }
+
+            filtered.forEach(r => {
+                const sttHtml = r.status === 1
+                    ? '<span class="badge-status status-success">Hoạt động</span>'
+                    : '<span class="badge-status status-danger">Khóa</span>';
+
+                tbody.innerHTML += `
+                    <tr>
+                        <td><b>${r.reader_code}</b></td>
+                        <td>${r.full_name}</td>
+                        <td>${r.department}</td>
+                        <td>${r.email}</td>
+                        <td>${r.phone}</td>
+                        <td>${sttHtml}</td>
+                        <td>
+                            <div class="actions-cell">
+                                <button class="btn-outline btn-sm" onclick="openEditReaderModal(${r.id})">Sửa</button>
+                                <button class="btn-outline btn-sm" onclick="toggleReaderLock(${r.id})">${r.status === 1 ? 'Khóa thẻ' : 'Mở thẻ'}</button>
+                            </div>
+                        </td>
+                    </tr>
+                `;
+            });
+        }
+
+        // =============================================================
+        // RENDER TAB 3: KHO SÁCH (S06)
+        // =============================================================
+        function setBookFilter(filter, btn) {
+            currentBookFilter = filter;
+            document.querySelectorAll('#section-books .segmented-filters .filter-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            renderBooksTable();
+        }
+
+        function renderBooksTable() {
+            const q = document.getElementById('book-search').value.toLowerCase().trim();
+            const cat = document.getElementById('book-category-filter').value;
+            const tbody = document.getElementById('book-table-body');
+            tbody.innerHTML = '';
+
+            const filtered = books.filter(b => {
+                const matchQ = b.title.toLowerCase().includes(q) || b.author.toLowerCase().includes(q) || b.book_code.toLowerCase().includes(q);
+                if (!matchQ) return false;
+
+                if (cat && b.category !== cat) return false;
+                if (currentBookFilter === 'out') return b.available_copies <= 0;
+                return true;
+            });
+
+            if (filtered.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="8" style="text-align:center;padding:24px;color:#64748B;">Không tìm thấy đầu sách nào</td></tr>';
+                return;
+            }
+
+            filtered.forEach(b => {
+                tbody.innerHTML += `
+                    <tr>
+                        <td><b>${b.book_code}</b></td>
+                        <td>${b.title}</td>
+                        <td>${b.author}</td>
+                        <td>${b.category}</td>
+                        <td>${b.total_copies}</td>
+                        <td style="${b.available_copies <= 0 ? 'font-weight:700;color:#DC2626;' : 'font-weight:700;'}">${b.available_copies}</td>
+                        <td>${b.location}</td>
+                        <td>
+                            <div class="actions-cell">
+                                <button class="btn-outline btn-sm" onclick="openEditBookModal(${b.id})">Sửa</button>
+                            </div>
+                        </td>
+                    </tr>
+                `;
+            });
+        }
+
+        // =============================================================
+        // RENDER TAB 4: THỐNG KÊ KPI (S08 · S09)
+        // =============================================================
+        function renderKpiSection() {
+            updateFines();
+            let totalBooks = books.reduce((sum, b) => sum + b.total_copies, 0);
+            let activeReaders = readers.filter(r => r.status === 1).length;
+            let activeBorrows = borrows.filter(b => !b.return_date).length;
+            let overdueBorrows = borrows.filter(b => !b.return_date && b.status === 3);
+
+            document.getElementById('kpi-total-books').innerText = totalBooks;
+            document.getElementById('kpi-active-readers').innerText = activeReaders;
+            document.getElementById('kpi-active-borrows').innerText = activeBorrows;
+            document.getElementById('kpi-overdue').innerText = overdueBorrows.length;
+
+            const tbody = document.getElementById('overdue-table-body');
+            tbody.innerHTML = '';
+
+            if (overdueBorrows.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="5" style="text-align:center;padding:24px;color:#059669;font-weight:600;">Tuyệt vời! Hiện tại không có độc giả nào bị trễ hạn.</td></tr>';
+                return;
+            }
+
+            const todayStr = formatDate(new Date());
+            const dToday = new Date(todayStr);
+
+            overdueBorrows.forEach(b => {
+                const r = readers.find(x => x.id === b.reader_id);
+                const bk = books.find(x => x.id === b.book_id);
+                const dDue = new Date(b.due_date);
+                const diffDays = Math.max(1, Math.round((dToday - dDue) / (1000 * 60 * 60 * 24)));
+
+                tbody.innerHTML += `
+                    <tr>
+                        <td><b>${r ? r.full_name : 'N/A'}</b> (${r ? r.reader_code : ''})</td>
+                        <td>${bk ? bk.title : 'N/A'}</td>
+                        <td style="color:#DC2626;font-weight:700;">${b.due_date}</td>
+                        <td style="color:#DC2626;font-weight:700;">${diffDays} ngày</td>
+                        <td style="font-weight:700;color:#DC2626;">${b.fine_amount.toLocaleString('vi-VN')}đ</td>
+                    </tr>
+                `;
+            });
+        }
+
+        function filterOverdueInKpi() {
+            renderKpiSection();
+            showToast("Đã làm mới dữ liệu danh sách quá hạn realtime.");
+        }
+
+        // =============================================================
+        // MODAL 1: LẬP PHIẾU MƯỢN (S03) & VALIDATION HẠN MỨC 3 CUỐN
+        // =============================================================
+        function openBorrowModal() {
+            // Đổ danh sách độc giả vào select
+            const rSelect = document.getElementById('borrow-reader-select');
+            rSelect.innerHTML = '<option value="">[Tìm mã / tên độc giả]</option>';
+            readers.forEach(r => {
+                rSelect.innerHTML += `<option value="${r.id}">${r.reader_code} - ${r.full_name} (${r.department})</option>`;
+            });
+
+            // Đổ danh sách sách vào select
+            const bSelect = document.getElementById('borrow-book-select');
+            bSelect.innerHTML = '<option value="">[Tìm đầu sách]</option>';
+            books.forEach(b => {
+                if (b.available_copies > 0) {
+                    bSelect.innerHTML += `<option value="${b.id}">${b.book_code} - ${b.title} (Còn ${b.available_copies})</option>`;
+                }
+            });
+
+            const today = new Date();
+            document.getElementById('borrow-date-input').value = formatDate(today);
+            autoCalcDueDate();
+            document.getElementById('borrow-note-input').value = '';
+
+            checkQuotaOnSelect();
+            document.getElementById('modal-borrow').style.display = 'flex';
+        }
+
+        function autoCalcDueDate() {
+            const bDateVal = document.getElementById('borrow-date-input').value;
+            if (bDateVal) {
+                const bDate = new Date(bDateVal);
+                const dDate = new Date(bDate.getTime() + 14 * 86400000);
+                document.getElementById('borrow-due-input').value = formatDate(dDate);
+            }
+        }
+
+        function checkQuotaOnSelect() {
+            const rId = parseInt(document.getElementById('borrow-reader-select').value) || 0;
+            const wBox = document.getElementById('borrow-warning-box');
+            const wText = document.getElementById('borrow-warning-text');
+            const btnSave = document.getElementById('btn-save-borrow');
+
+            if (!rId) {
+                wBox.className = 'wireframe-alert-box';
+                wText.innerText = 'Cảnh báo: độc giả đang mượn [n]/3 cuốn. Đạt hạn mức thì không thể lập phiếu.';
+                btnSave.classList.remove('btn-disabled');
+                btnSave.disabled = false;
+                return;
+            }
+
+            // Đếm số sách đang mượn chưa trả
+            const activeCount = borrows.filter(b => b.reader_id === rId && !b.return_date).length;
+
+            if (activeCount >= 3) {
+                wBox.className = 'wireframe-alert-box alert-danger';
+                wText.innerHTML = `<b>CẢNH BÁO VI PHẠM HẠN MỨC:</b> Độc giả hiện đang giữ <b>${activeCount}/3</b> cuốn sách. Theo quy chế thư viện, ĐẠT HẠN MỨC THÌ KHÔNG THỂ LẬP PHIẾU!`;
+                btnSave.classList.add('btn-disabled');
+                btnSave.disabled = true;
+            } else {
+                wBox.className = 'wireframe-alert-box';
+                wText.innerHTML = `Độc giả hiện đang mượn <b>${activeCount}/3</b> cuốn sách. Còn quyền mượn thêm <b>${3 - activeCount}</b> cuốn.`;
+                btnSave.classList.remove('btn-disabled');
+                btnSave.disabled = false;
+            }
+        }
+
+        function submitBorrow() {
+            const rId = parseInt(document.getElementById('borrow-reader-select').value);
+            const bId = parseInt(document.getElementById('borrow-book-select').value);
+            const bDate = document.getElementById('borrow-date-input').value;
+            const dDate = document.getElementById('borrow-due-input').value;
+            const note = document.getElementById('borrow-note-input').value.trim();
+
+            if (!rId) { alert("Vui lòng chọn độc giả!"); return; }
+            if (!bId) { alert("Vui lòng chọn đầu sách!"); return; }
+
+            const activeCount = borrows.filter(b => b.reader_id === rId && !b.return_date).length;
+            if (activeCount >= 3) {
+                alert("LỖI KIỂM THỬ SQA (TC-02): Độc giả đã đạt hạn mức 3 cuốn! Không thể lập phiếu.");
+                return;
+            }
+
+            const book = books.find(x => x.id === bId);
+            if (!book || book.available_copies <= 0) {
+                alert("LỖI KIỂM THỬ SQA (TC-03): Sách đã hết bản lưu trong kho!");
+                return;
+            }
+
+            // Ghi nhận phiếu mượn
+            const newId = borrows.length > 0 ? Math.max(...borrows.map(x => x.id)) + 1 : 1;
+            borrows.unshift({
+                id: newId,
+                reader_id: rId,
+                book_id: bId,
+                borrow_date: bDate,
+                due_date: dDate,
+                return_date: null,
+                status: 1,
+                fine_amount: 0,
+                note: note || "Đang mượn"
+            });
+
+            // Giảm tồn kho
+            book.available_copies -= 1;
+
+            closeModal('modal-borrow');
+            renderBorrowsTable();
+            showToast(`Lập phiếu mượn PM-${String(newId).padStart(3, '0')} thành công!`);
+        }
+
+        // =============================================================
+        // TRẢ SÁCH VÀ GIA HẠN (S02)
+        // =============================================================
+        function returnBook(borrowId) {
+            const b = borrows.find(x => x.id === borrowId);
+            if (!b) return;
+
+            let msg = `Xác nhận trả sách cho phiếu PM-${String(b.id).padStart(3, '0')}?`;
+            if (b.fine_amount > 0) {
+                msg += `\nCẢNH BÁO: Phiếu quá hạn, vui lòng thu tiền phạt: ${b.fine_amount.toLocaleString('vi-VN')} VNĐ!`;
+            }
+
+            if (confirm(msg)) {
+                b.return_date = formatDate(new Date());
+                b.status = 2; // Đã trả
+                const bk = books.find(x => x.id === b.book_id);
+                if (bk) bk.available_copies += 1;
+                renderBorrowsTable();
+                showToast(`Đã thu hồi sách và hoàn tất phiếu PM-${String(b.id).padStart(3, '0')}!`);
+            }
+        }
+
+        function renewBook(borrowId) {
+            const b = borrows.find(x => x.id === borrowId);
+            if (!b) return;
+
+            if (b.status === 3) {
+                alert("LỖI: Phiếu mượn đã bị quá hạn, không được phép gia hạn! Độc giả phải nộp phạt và trả sách.");
+                return;
+            }
+
+            const curDue = new Date(b.due_date);
+            const newDue = new Date(curDue.getTime() + 7 * 86400000);
+            b.due_date = formatDate(newDue);
+            b.note = "Đã gia hạn thêm +7 ngày";
+            renderBorrowsTable();
+            showToast(`Gia hạn thành công thêm 7 ngày! Hạn mới: ${b.due_date}`);
+        }
+
+        // =============================================================
+        // MODAL 2: THÊM / SỬA ĐỘC GIẢ (S05)
+        // =============================================================
+        function openAddReaderModal() {
+            document.getElementById('reader-modal-heading').innerText = 'Thêm độc giả mới';
+            document.getElementById('reader-id-edit').value = '';
+            document.getElementById('reader-code-input').value = 'SV' + Math.floor(1000 + Math.random() * 9000);
+            document.getElementById('reader-name-input').value = '';
+            document.getElementById('reader-email-input').value = '';
+            document.getElementById('reader-phone-input').value = '';
+            document.getElementById('reader-dept-input').value = 'CNTT K19';
+            setReaderStatusChoice(1);
+            document.getElementById('modal-reader').style.display = 'flex';
+        }
+
+        function openEditReaderModal(rId) {
+            const r = readers.find(x => x.id === rId);
+            if (!r) return;
+            document.getElementById('reader-modal-heading').innerText = 'Sửa thông tin độc giả';
+            document.getElementById('reader-id-edit').value = r.id;
+            document.getElementById('reader-code-input').value = r.reader_code;
+            document.getElementById('reader-name-input').value = r.full_name;
+            document.getElementById('reader-email-input').value = r.email;
+            document.getElementById('reader-phone-input').value = r.phone;
+            document.getElementById('reader-dept-input').value = r.department;
+            setReaderStatusChoice(r.status);
+            document.getElementById('modal-reader').style.display = 'flex';
+        }
+
+        function setReaderStatusChoice(stt) {
+            currentReaderStatusChoice = stt;
+            document.getElementById('btn-status-act').classList.toggle('active', stt === 1);
+            document.getElementById('btn-status-lock').classList.toggle('active', stt === 0);
+        }
+
+        function submitReader() {
+            const editId = document.getElementById('reader-id-edit').value;
+            const code = document.getElementById('reader-code-input').value.trim();
+            const name = document.getElementById('reader-name-input').value.trim();
+            const email = document.getElementById('reader-email-input').value.trim();
+            const phone = document.getElementById('reader-phone-input').value.trim();
+            const dept = document.getElementById('reader-dept-input').value.trim();
+
+            if (!code || !name) {
+                alert("Vui lòng nhập mã sinh viên và họ tên!");
+                return;
+            }
+
+            if (editId) {
+                const r = readers.find(x => x.id === parseInt(editId));
+                if (r) {
+                    r.reader_code = code;
+                    r.full_name = name;
+                    r.email = email;
+                    r.phone = phone;
+                    r.department = dept;
+                    r.status = currentReaderStatusChoice;
+                    showToast("Cập nhật thông tin độc giả thành công!");
+                }
+            } else {
+                const newId = readers.length > 0 ? Math.max(...readers.map(x => x.id)) + 1 : 1;
+                readers.push({
+                    id: newId,
+                    reader_code: code,
+                    full_name: name,
+                    email: email,
+                    phone: phone,
+                    department: dept,
+                    status: currentReaderStatusChoice
+                });
+                showToast("Thêm bạn đọc mới thành công!");
+            }
+
+            closeModal('modal-reader');
+            renderReadersTable();
+        }
+
+        function toggleReaderLock(rId) {
+            const r = readers.find(x => x.id === rId);
+            if (!r) return;
+            r.status = r.status === 1 ? 0 : 1;
+            renderReadersTable();
+            showToast(`Đã ${r.status === 1 ? 'mở khóa' : 'khóa'} thẻ bạn đọc ${r.reader_code}!`);
+        }
+
+        // =============================================================
+        // MODAL 3: THÊM / SỬA SÁCH (S07)
+        // =============================================================
+        function openAddBookModal() {
+            document.getElementById('book-modal-heading').innerText = 'Thêm đầu sách mới';
+            document.getElementById('book-id-edit').value = '';
+            document.getElementById('book-code-input').value = 'BK' + Math.floor(100 + Math.random() * 900);
+            document.getElementById('book-title-input').value = '';
+            document.getElementById('book-author-input').value = '';
+            document.getElementById('book-cat-input').value = 'Giáo trình';
+            document.getElementById('book-total-input').value = '5';
+            document.getElementById('book-avail-input').value = '5';
+            document.getElementById('book-loc-input').value = 'Kệ A3 - Tầng 2';
+            document.getElementById('modal-book').style.display = 'flex';
+        }
+
+        function openEditBookModal(bId) {
+            const b = books.find(x => x.id === bId);
+            if (!b) return;
+            document.getElementById('book-modal-heading').innerText = 'Sửa thông tin sách';
+            document.getElementById('book-id-edit').value = b.id;
+            document.getElementById('book-code-input').value = b.book_code;
+            document.getElementById('book-title-input').value = b.title;
+            document.getElementById('book-author-input').value = b.author;
+            document.getElementById('book-cat-input').value = b.category;
+            document.getElementById('book-total-input').value = b.total_copies;
+            document.getElementById('book-avail-input').value = b.available_copies;
+            document.getElementById('book-loc-input').value = b.location;
+            document.getElementById('modal-book').style.display = 'flex';
+        }
+
+        function submitBook() {
+            const editId = document.getElementById('book-id-edit').value;
+            const code = document.getElementById('book-code-input').value.trim();
+            const title = document.getElementById('book-title-input').value.trim();
+            const author = document.getElementById('book-author-input').value.trim();
+            const cat = document.getElementById('book-cat-input').value.trim();
+            const total = parseInt(document.getElementById('book-total-input').value) || 1;
+            const avail = parseInt(document.getElementById('book-avail-input').value) || 0;
+            const loc = document.getElementById('book-loc-input').value.trim();
+
+            if (!code || !title) {
+                alert("Vui lòng nhập mã sách và tên sách!");
+                return;
+            }
+
+            if (editId) {
+                const b = books.find(x => x.id === parseInt(editId));
+                if (b) {
+                    b.book_code = code;
+                    b.title = title;
+                    b.author = author;
+                    b.category = cat;
+                    b.total_copies = total;
+                    b.available_copies = avail;
+                    b.location = loc;
+                    showToast("Cập nhật thông tin sách thành công!");
+                }
+            } else {
+                const newId = books.length > 0 ? Math.max(...books.map(x => x.id)) + 1 : 1;
+                books.push({
+                    id: newId,
+                    book_code: code,
+                    title: title,
+                    author: author,
+                    category: cat,
+                    total_copies: total,
+                    available_copies: avail,
+                    location: loc
+                });
+                showToast("Thêm đầu sách mới vào kho thành công!");
+            }
+
+            closeModal('modal-book');
+            renderBooksTable();
+        }
+
+        // =============================================================
+        // TIỆN ÍCH: CSV & SAO LƯU & TOAST
+        // =============================================================
+        function exportCsv() {
+            let csv = "Mã phiếu,Độc giả,Mã SV,Tên sách,Ngày mượn,Hạn trả,Ngày trả,Tiền phạt\n";
+            borrows.forEach(b => {
+                const r = readers.find(x => x.id === b.reader_id);
+                const bk = books.find(x => x.id === b.book_id);
+                csv += `PM-${String(b.id).padStart(3, '0')},"${r?r.full_name:''}",${r?r.reader_code:''},"${bk?bk.title:''}",${b.borrow_date},${b.due_date},${b.return_date||'Chưa trả'},${b.fine_amount}\n`;
+            });
+            const blob = new Blob(["\uFEFF" + csv], { type: 'text/csv;charset=utf-8;' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `Bao_Cao_Muon_Tra_LibManage_${formatDate(new Date())}.csv`;
+            a.click();
+            showToast("Đã tải xuống file báo cáo CSV thành công!");
+        }
+
+        function backupJson() {
+            const data = { books, readers, borrows, export_date: new Date().toISOString() };
+            const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `Backup_LibManage_${formatDate(new Date())}.json`;
+            a.click();
+            showToast("Đã trích xuất file sao lưu dữ liệu JSON thành công!");
+        }
+
+        function closeModal(modalId) {
+            document.getElementById(modalId).style.display = 'none';
+        }
+
+        function showToast(msg) {
+            const t = document.getElementById('app-toast');
+            t.innerText = msg;
+            t.style.display = 'block';
+            setTimeout(() => { t.style.display = 'none'; }, 2800);
+        }
+
+        // Tự động khởi chạy
+        window.onload = function() {
+            renderBorrowsTable();
+        };
+    </script>
+</body>
+</html>
