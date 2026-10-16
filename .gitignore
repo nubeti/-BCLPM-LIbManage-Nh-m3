@@ -1,0 +1,22 @@
+# Java bytecode
+*.class
+
+# Dependencies
+node_modules/
+package-lock.json
+
+# Environment & temporary files
+.env
+*.log
+*.tmp
+.DS_Store
+Thumbs.db
+
+# Test scripts
+test.docx
+__pycache__/
+*.pyc
+
+# IDE configs
+.vscode/
+.idea/
